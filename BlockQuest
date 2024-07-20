@@ -1,0 +1,49 @@
+# scripts/blockchain_query.py
+
+from web3 import Web3
+
+def connect_to_blockchain(provider_url):
+    """
+    Connect to the blockchain.
+
+    :param provider_url: URL of the blockchain provider
+    :return: Web3 instance
+    """
+    web3 = Web3(Web3.HTTPProvider(provider_url))
+    if not web3.isConnected():
+        raise ConnectionError("Failed to connect to the blockchain provider")
+    return web3
+
+def get_block_details(web3, block_number):
+    """
+    Get details of a specific block.
+
+    :param web3: Web3 instance
+    :param block_number: Block number
+    :return: Block details
+    """
+    block = web3.eth.getBlock(block_number, full=True)
+    return block
+
+def get_transaction_details(web3, tx_hash):
+    """
+    Get details of a specific transaction.
+
+    :param web3: Web3 instance
+    :param tx_hash: Transaction hash
+    :return: Transaction details
+    """
+    tx = web3.eth.getTransaction(tx_hash)
+    return tx
+
+def get_account_balance(web3, account_address):
+    """
+    Get the balance of a specific account.
+
+    :param web3: Web3 instance
+    :param account_address: Address of the account
+    :return: Account balance in Wei
+    """
+    balance = web3.eth.getBalance(account_address)
+    return balance / 10**18  # Convert from Wei to ETH
+
